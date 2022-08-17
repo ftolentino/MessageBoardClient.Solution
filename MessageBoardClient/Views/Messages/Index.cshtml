@@ -1,0 +1,16 @@
+@using MessageBoardClient.Models;
+
+<h1>All Messages</h1>
+
+<ol>
+@foreach(Message message in Model)
+{
+  <ul>
+    <li>ID: @message.MessageId</li>
+    <li>Username: @message.User </li>
+    <li>Message Board Name: @message.Name </li>
+    <li>Comment: @message.Comment </li>
+    <li>Posted: @message.PostDate</li>
+  </ul>
+  <p>@Html.ActionLink("View Details", "Details", new { id = @message.MessageId})</p>
+}
