@@ -1,74 +1,50 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using MessageBoardClient.Models;
 
 namespace MessageBoardClient.Controllers
 {
   public class MessagesController : Controller
   {
-    private readonly MessageBoardClientContext _db;
-
-    public MessagesController(MessageBoardClientContext db)
-    {
-      _db = db;
-    }
-
     public IActionResult Index()
     {
       var allMessages = Message.GetMessages();
       return View(allMessages);
     }
 
-    public ActionResult Create()
+    [HttpPost]
+    public IActionResult Index(Message message)
     {
-      return View();
+      Message.Post(message);
+      return RedirectToAction("Index");
+    }
+    public IActionResult Details(int id)
+    {
+      var animal = Message.GetDetails(id);
+      return View(animal);
+    }
+
+    public IActionResult Edit(int id)
+    {
+      var animal = Message.GetDetails(id);
+      return View(animal);
     }
 
     [HttpPost]
-    public ActionResult Create(Message message)
+    public IActionResult Details(int id, Message message)
     {
-      _db.Messages.Add(message);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      message.MessageId = id;
+      Message.Put(message);
+      return RedirectToAction("Details", id);
     }
 
-    public ActionResult Details(int id)
+    public IActionResult Delete(int id)
     {
-        var thisMessage = _db.Messages.FirstOrDefault(message => message.MessageId == id);
-        return View(thisMessage);
-    }
-
-    public ActionResult Edit(int id)
-    {
-      var thisMessage = _db.Messages.FirstOrDefault(message => message.MessageId ==id);
-      return View(thisMessage);
-    }
-
-    [HttpPost]
-    public ActionResult Edit(Message message)
-    {
-      _db.Entry(message).State = EntityState.Modified;
-      _db.SaveChanges();
-      return RedirectToAction("Index");
-    }
-
-    public ActionResult Delete(int id)
-    {
-      var thisMessage = _db.Messages.FirstOrDefault(message => message.MessageId == id);
-      return View(thisMessage);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    public ActionResult DeleteConfirmed(int id)
-    {
-      var thisMessage = _db.Messages.FirstOrDefault(message => message.MessageId == id);
-      _db.Messages.Remove(thisMessage);
-      _db.SaveChanges();
+      Message.Delete(id);
       return RedirectToAction("Index");
     }
   }

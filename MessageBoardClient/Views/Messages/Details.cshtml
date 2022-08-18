@@ -1,0 +1,21 @@
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Message Info:</h1>
+<ul>
+    <li>ID: @Model.MessageId</li>
+    <li>Name: @Model.Name</li>
+    <li>Comment: @Model.Comment</li>
+    <li>PostDate: @Model.PostDate</li>
+    <li>User: @Model.User</li>
+</ul>
+<br>
+
+<a href="/Messages/Edit/@(Model.AnimalId)"><p>Edit</p></a>
+<br>
+
+<a href="/Messages"><p>Return</p></a>
+
+<a href="/Messages/Delete/@(Model.AnimalId)"><p>DELETE MESSAGE</p></a>

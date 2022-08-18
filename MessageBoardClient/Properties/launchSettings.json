@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "MessageBoard.Solution": {
+    "MessageBoardClient": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

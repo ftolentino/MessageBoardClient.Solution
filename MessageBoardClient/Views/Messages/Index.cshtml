@@ -1,16 +1,32 @@
-@using MessageBoardClient.Models;
+@{
+    ViewData["Title"] = "Home Page";
+}
 
-<h1>All Messages</h1>
+<h1>New Message:</h1>
+
+
+<form action="/messages" method="post">
+
+  <label for="name">Message Name</label>
+  <input id="name" name="name" type="text">
+  <label for="comment">Comment</label>
+  <input id="comment" name="comment" type="text">
+  <label for="user">User</label>
+  <input id="user" name="user" type="text">
+  <button type="submit">Go!</button>
+</form>
 
 <ol>
-@foreach(Message message in Model)
+@foreach (Message message in Model)
 {
-  <ul>
-    <li>ID: @message.MessageId</li>
-    <li>Username: @message.User </li>
-    <li>Message Board Name: @message.Name </li>
-    <li>Comment: @message.Comment </li>
-    <li>Posted: @message.PostDate</li>
-  </ul>
-  <p>@Html.ActionLink("View Details", "Details", new { id = @message.MessageId})</p>
+    <ul>
+        <li>ID: @message.MessageId</li>
+        <li>Name: @message.Name</li>
+        <li>Species: @message.Comment</li>
+        <li>Age: @message.PostDate</li>
+        <li>Gender: @message.User</li>
+    </ul>
+    <a href="/Messages/Details/@(message.MessageId)"><p>View Details</p></a>
+    <br>
 }
+</ol>
